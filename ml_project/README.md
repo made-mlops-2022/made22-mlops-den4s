@@ -35,38 +35,38 @@ and check results in `/reports` - some tables and plots will appear here.
 ## Organization
 Project is organized as follows:
 
-ml_project
-│
-├── configs         <- configuration files for pipelines and loggers
-│   │
-│   └── loggers             <- configuration files for loggers
-│
-├── data
-│   │
-│   ├── predictions <- model predictions
-│   │
-│   └── raw                 <- the original dataset
-│
-├── models          <- trained and serialized models
-│
-├── notebooks       <- notebooks (EDA + model)
-│
-├── reports         <- generated report files
-│
-├── suorce          <- project source code
-│   │
-│   ├── data                <- code to download and featurise data
-│   │
-│   ├── entities            <- necessary dataclasses
-│   │
-│   ├── models              <- code for train/test models
-│   │
-│   ├── eval_pipeline.py    <- evaluation pipeline
-│   │
-│   ├── generate_report.py  <- report generator to /reports
-│   │
-│   └── train_pipeline.py   <- train pipeline
-│
-├── README.md       <- user guide README
-│
-└── setup.py        <- train pipeline
+    ml_project
+    │
+    ├── configs         <- configuration files for pipelines and loggers
+    │   │
+    │   └── loggers             <- configuration files for loggers
+    │
+    ├── data
+    │   │
+    │   ├── predictions <- model predictions
+    │   │
+    │   └── raw                 <- the original dataset
+    │
+    ├── models          <- trained and serialized models
+    │
+    ├── notebooks       <- notebooks (EDA + model)
+    │
+    ├── reports         <- generated report files
+    │
+    ├── suorce          <- project source code
+    │   │
+    │   ├── data                <- code to download and featurise data
+    │   │
+    │   ├── entities            <- necessary dataclasses
+    │   │
+    │   ├── models              <- code for train/test models
+    │   │
+    │   ├── eval_pipeline.py    <- evaluation pipeline
+    │   │
+    │   ├── generate_report.py  <- report generator to /reports
+    │   │
+    │   └── train_pipeline.py   <- train pipeline
+    │
+    ├── README.md       <- user guide README
+    │
+    └── setup.py        <- train pipeline
