@@ -6,38 +6,67 @@ _**Heart Disease Cleveland UCI**_ – [kaggle.com](https://www.kaggle.com/datase
 
 Location: `heart_cleveland_upload.csv` in `data/raw`
 
+## Guide
+### Installation
+From `\` run
 
-## Project Organization
+`pip install .`
 
+### Pipelines running
+To run train pipeline run
 
-## Evaluation criteria
+`python source/train_pipeline.py train_config_path`
 
-+ описание в пулл-реквесте того, что сделано и для чего (1 балл)
+where `train_config_path` - path to corresponding model config (_Ex._ `configs/train_logreg_config.yaml` or `configs/train_forest_config.yaml`)
 
-+ проведена самооценка, по каждому пункту расписано выполнен критерий или нет и на сколько баллов (1 балл)
+To evaluate model run
 
-+ выполнено EDA: ноутбук в папке с ноутбуками (1 балл), возможно с моделью
+`python source/eval_pipeline.py eval_config_path` 
 
-+ использован скрипт, генерирующий отчет, закоммичены и скрипт и отчет (за это + 1 балл)
+where `eval_config_path` - path to corresponding evaluation config (_Ex._ `configs/eval_logreg_config.yaml` or `configs/eval_forest_config.yaml`)
 
-+ написана функция/класс для тренировки модели, вызов оформлен как утилита командной строки, записана в readme инструкцию по запуску (3 балла)
+### Report generation
+Run
 
-+ написана функция/класс predict (вызов оформлен как утилита командной строки), которая примет на вход артефакт/ы от обучения, тестовую выборку (без меток) и запишет предикт по заданному пути, инструкция по вызову записана в readme (3 балла)
+`python source/generate_report.py`
 
-+ проект имеет модульную структуру (2 балла)
+and check results in `/reports` - some tables and plots will appear here.
 
-+ использованы логгеры (2 балла)
+## Organization
+Project is organized as follows:
 
-+ написаны тесты на отдельные модули и на прогон обучения и predict (3 балла)
-
-+ для тестов генерируются синтетические данные, приближенные к реальным (2 балла)
-
-+ обучение модели конфигурируется с помощью конфигов в json или yaml, закоммичены как минимум 2 корректные конфигурации, с помощью которых можно обучить модель (разные модели, стратегии split, preprocessing) (3 балла)
-
-+ используются датаклассы для сущностей из конфига, а не голые dict (2 балла)
-
-+ написан и протестирован кастомный трансформер (3 балла)
-
-+ в проекте зафиксированы все зависимости (1 балл)
-
-+ настроен CI для прогона тестов, линтера на основе github actions (3 балла)
+ml_project
+│
+├── configs         <- configuration files for pipelines and loggers
+│   │
+│   └── loggers             <- configuration files for loggers
+│
+├── data
+│   │
+│   ├── predictions <- model predictions
+│   │
+│   └── raw                 <- the original dataset
+│
+├── models          <- trained and serialized models
+│
+├── notebooks       <- notebooks (EDA + model)
+│
+├── reports         <- generated report files
+│
+├── suorce          <- project source code
+│   │
+│   ├── data                <- code to download and featurise data
+│   │
+│   ├── entities            <- necessary dataclasses
+│   │
+│   ├── models              <- code for train/test models
+│   │
+│   ├── eval_pipeline.py    <- evaluation pipeline
+│   │
+│   ├── generate_report.py  <- report generator to /reports
+│   │
+│   └── train_pipeline.py   <- train pipeline
+│
+├── README.md       <- user guide README
+│
+└── setup.py        <- train pipeline
