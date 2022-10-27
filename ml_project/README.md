@@ -72,7 +72,7 @@ Project is organized as follows:
     │   │
     │   └── train_pipeline.py   <- train pipeline
     │
-    ├── tests           <- Unit tests for project modules and e2e tests.
+    ├── tests           <- tests
     │
     ├── README.md       <- user guide README
     │
