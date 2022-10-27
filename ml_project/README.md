@@ -32,6 +32,11 @@ Run
 
 and check results in `/reports` - some tables and plots will appear here.
 
+### Tests
+Run the following command
+ 
+`pytest -v tests/`
+
 ## Organization
 Project is organized as follows:
 
@@ -66,6 +71,8 @@ Project is organized as follows:
     │   ├── generate_report.py  <- report generator to /reports
     │   │
     │   └── train_pipeline.py   <- train pipeline
+    │
+    ├── tests           <- Unit tests for project modules and e2e tests.
     │
     ├── README.md       <- user guide README
     │
