@@ -7,3 +7,8 @@ _**Heart Disease Cleveland UCI**_ – [kaggle.com](https://www.kaggle.com/datase
 Location: `heart_cleveland_upload.csv` in `data`
 
 ## Guide
+
+
+## App tests
+
+Run `pytest -v tests/`
