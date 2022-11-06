@@ -1,7 +1,5 @@
 from typing import List, Union
-
 from pydantic import BaseModel, conlist, validator
-
 from .feature_prms import ALL_FEATURES
 
 
