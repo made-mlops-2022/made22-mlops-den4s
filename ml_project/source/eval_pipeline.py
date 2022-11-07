@@ -27,15 +27,13 @@ def eval_pipeline(eval_pipeline_params: EvalPipelineParams) -> Tuple[Optional[st
     # logger.info(f"evaluating pipeline parameters:{splitter}{eval_pipeline_params}{splitter}")
     logger.debug(f"data.shape: {data.shape}")
 
-    try:  # try to load the transformer
+    try:  # try to load the fitted transformer
         transformer = load_transformer(eval_pipeline_params.input_transformer_path)
         logger.info(f"loading transformer from {eval_pipeline_params.input_transformer_path}")
     except FileNotFoundError:
         logger.error(f"no such file or directory {eval_pipeline_params.input_transformer_path}")
         return None, None
 
-    # transforming data
-    transformer.fit(data)
     # constructing features
     features = construct_features(transformer, data)
     logger.debug(f"features.shape: {features.shape}")

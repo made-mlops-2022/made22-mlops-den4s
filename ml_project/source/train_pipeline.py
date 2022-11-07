@@ -32,16 +32,15 @@ def train_pipeline(train_pipeline_params: TrainPipelineParams) -> Tuple[str, str
     logger.debug(f"test_df.shape: {test_df.shape}")
 
     transformer = build_transformer(train_pipeline_params.feature_params)
+    transformer.fit(train_df)
 
-    # dump transformer
+    # dump fitted transformer
     try:
         path_to_transformer = dump_transformer(transformer, train_pipeline_params.output_transformer_path)
         logger.info(f"transformer serialization: {train_pipeline_params.output_transformer_path}")
     except FileNotFoundError:
         path_to_transformer = None
         logger.warning(f"invalid path for transformer serialization: {train_pipeline_params.output_transformer_path}")
-
-    transformer.fit(train_df)
 
     # FEATURES CONSTRUCTION
     train_features = construct_features(transformer, train_df)
