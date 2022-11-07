@@ -48,7 +48,7 @@ Project is organized as follows:
     │
     ├── data
     │   │
-    │   ├── predictions <- model predictions
+    │   ├── predictions         <- model predictions
     │   │
     │   └── raw                 <- the original dataset
     │
@@ -74,6 +74,8 @@ Project is organized as follows:
     │
     ├── tests           <- tests
     │
+    ├── transformers    <- serialized transformers
+    │
     ├── README.md       <- user guide README
     │
-    └── setup.py        <- train pipeline
+    └── setup.py

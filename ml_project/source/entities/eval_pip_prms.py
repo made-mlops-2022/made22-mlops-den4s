@@ -20,6 +20,7 @@ splitter = StreamLoggingParams.field_splitter
 class EvalPipelineParams:
     input_data_path: str
     input_model_path: str
+    input_transformer_path: str
     output_data_path: str
     feature_params: FeatureParams
 

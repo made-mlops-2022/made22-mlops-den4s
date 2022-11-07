@@ -12,17 +12,20 @@ def test_train_pipeline(tmpdir: LocalPath, generate_data: pd.DataFrame, feature_
     generate_data.to_csv(data_path)  # generate data
     model_path = tmpdir.join("model.pkl")
     metrics_path = tmpdir.join("metrics.json")
+    transformer_path = tmpdir.join("transformer.pkl")
     # TRAIN PIPELINE
     train_pipeline_params = TrainPipelineParams(input_data_path=data_path,
                                                 output_model_path=model_path,
                                                 metric_path=metrics_path,
+                                                output_transformer_path=transformer_path,
                                                 split_params=SplitParams(),
                                                 feature_params=feature_params,
                                                 model_params=ModelParams()
                                                 )
-    real_model_path, metrics = train_pipeline(train_pipeline_params)
+    real_model_path, real_transformer_path, metrics = train_pipeline(train_pipeline_params)
     assert all(score in {"acc_score", "f1_score"} for score in metrics.keys())
     assert real_model_path == model_path
+    assert real_transformer_path == transformer_path
 
 
 def test_eval_pipeline(tmpdir: LocalPath, generate_data: pd.DataFrame, feature_params: FeatureParams):
@@ -30,19 +33,22 @@ def test_eval_pipeline(tmpdir: LocalPath, generate_data: pd.DataFrame, feature_p
     generate_data.to_csv(data_path)  # generate data
     model_path = tmpdir.join("model.pkl")
     metrics_path = tmpdir.join("metrics.json")
+    transformer_path = tmpdir.join("transformer.pkl")
     # TRAIN PIPELINE
     train_pip_prms = TrainPipelineParams(input_data_path=data_path,
                                          output_model_path=model_path,
                                          metric_path=metrics_path,
+                                         output_transformer_path=transformer_path,
                                          split_params=SplitParams(),
                                          feature_params=feature_params,
                                          model_params=ModelParams()
                                          )
-    real_model_path, metrics = train_pipeline(train_pip_prms)
+    real_model_path, real_transformer_path, metrics = train_pipeline(train_pip_prms)
     # EVALUATE PIPELINE
     predictions_path = tmpdir.join("heart_predictions.csv")
     eval_pip_prms = EvalPipelineParams(input_data_path=data_path,
                                        input_model_path=real_model_path,
+                                       input_transformer_path=real_transformer_path,
                                        output_data_path=predictions_path,
                                        feature_params=feature_params,
                                        )

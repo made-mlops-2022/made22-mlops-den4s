@@ -23,6 +23,7 @@ class TrainPipelineParams:
     input_data_path: str
     output_model_path: str
     metric_path: str
+    output_transformer_path: str  # for transformer serialization
     split_params: SplitParams
     feature_params: FeatureParams
     model_params: ModelParams

@@ -1,5 +1,6 @@
 import logging.config
 
+import pickle
 import yaml
 import numpy as np
 import pandas as pd
@@ -8,9 +9,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import OneHotEncoder
-
-from source.entities import FeatureParams, StreamLoggingParams
 from sklearn.base import BaseEstimator, TransformerMixin
+# LOCAL
+from source.entities import FeatureParams, StreamLoggingParams
 
 
 # LOGGER CONFIGURING
@@ -72,3 +73,16 @@ def get_target(df: pd.DataFrame, params: FeatureParams) -> pd.Series:
 def construct_features(transformer: ColumnTransformer, df: pd.DataFrame) -> pd.DataFrame:
     logger.debug("constructing features")
     return pd.DataFrame(transformer.transform(df))
+
+
+# SERIALIZATION
+def dump_transformer(transformer: ColumnTransformer, output: str) -> str:
+    with open(output, "wb") as f:
+        pickle.dump(transformer, f)
+    return output
+
+
+def load_transformer(input: str) -> ColumnTransformer:
+    with open(input, "rb") as f:
+        transformer = pickle.load(f)
+    return transformer

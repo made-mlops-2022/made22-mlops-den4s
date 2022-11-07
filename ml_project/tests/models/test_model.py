@@ -1,4 +1,3 @@
-import os
 import pickle
 from typing import Tuple
 from py._path.local import LocalPath
@@ -7,6 +6,7 @@ import pandas as pd
 # MODELS
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
+
 from source.entities import ModelParams
 from source.models.model_train_pred import train_model, predict_model, evaluate_model, dump_model, Classifier
 
@@ -24,6 +24,7 @@ def test_predict_model(clf: Classifier, features_and_target: Tuple[pd.DataFrame,
     assert preds.sum() <= preds.shape[0]
     metrics = evaluate_model(preds, target)  # evaluation
     assert all(0 <= val <= 1 for val in metrics.values())
+
 
 def test_dump_model(tmpdir: LocalPath):
     output_path = tmpdir.join("model.pkl")

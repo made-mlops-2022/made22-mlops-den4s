@@ -1,0 +1,20 @@
+input_data_path: "data/raw/heart_cleveland_upload.csv"
+input_model_path: "models/model.pkl"
+input_transformer_path: "transformers/transformer.pkl"
+output_data_path: "data/predictions/heart_predictions.csv"
+feature_params:
+  discrete_features:
+    - "sex"
+    - "cp"
+    - "fbs"
+    - "restecg"
+    - "exang"
+    - "slope"
+    - "ca"
+    - "thal"
+  continuous_features:
+    - "age"
+    - "trestbps"
+    - "chol"
+    - "thalach"
+    - "oldpeak"

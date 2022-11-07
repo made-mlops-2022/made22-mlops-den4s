@@ -6,7 +6,7 @@ import click
 
 # DATA
 from source.data import read_data, split_data, construct_features
-from source.data.construct_features import build_transformer, get_target
+from source.data.construct_features import build_transformer, get_target, dump_transformer
 # MODEL
 from source.models import train_model, predict_model, evaluate_model, dump_model
 # PIPELINE + LOGGER
@@ -21,7 +21,7 @@ logger = logging.getLogger(StreamLoggingParams.logger)
 splitter = StreamLoggingParams.field_splitter
 
 
-def train_pipeline(train_pipeline_params: TrainPipelineParams) -> Tuple[str, dict]:
+def train_pipeline(train_pipeline_params: TrainPipelineParams) -> Tuple[str, str, dict]:
     # READING DATASET
     # logger.info(f"training pipeline params:{splitter}{train_pipeline_params}{splitter}")
     data = read_data(train_pipeline_params.input_data_path)
@@ -32,7 +32,17 @@ def train_pipeline(train_pipeline_params: TrainPipelineParams) -> Tuple[str, dic
     logger.debug(f"test_df.shape: {test_df.shape}")
 
     transformer = build_transformer(train_pipeline_params.feature_params)
+
+    # dump transformer
+    try:
+        path_to_transformer = dump_transformer(transformer, train_pipeline_params.output_transformer_path)
+        logger.info(f"transformer serialization: {train_pipeline_params.output_transformer_path}")
+    except FileNotFoundError:
+        path_to_transformer = None
+        logger.warning(f"invalid path for transformer serialization: {train_pipeline_params.output_transformer_path}")
+
     transformer.fit(train_df)
+
     # FEATURES CONSTRUCTION
     train_features = construct_features(transformer, train_df)
     train_target = get_target(train_df, train_pipeline_params.feature_params)
@@ -58,9 +68,9 @@ def train_pipeline(train_pipeline_params: TrainPipelineParams) -> Tuple[str, dic
         logger.info(f"model serialization: {train_pipeline_params.output_model_path}")
     except FileNotFoundError:
         path_to_model = None
-        logger.warning(f"model serialization ERROR: {train_pipeline_params.output_model_path}")
+        logger.warning(f"invalid path for model serialization: {train_pipeline_params.output_model_path}")
 
-    return path_to_model, metrics
+    return path_to_model, path_to_transformer, metrics
 
 
 # CALL FROM COMMAND LINE

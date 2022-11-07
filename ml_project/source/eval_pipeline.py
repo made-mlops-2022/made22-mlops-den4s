@@ -6,7 +6,7 @@ from typing import Optional, Tuple
 
 # DATA
 from source.data import read_data, construct_features
-from source.data.construct_features import build_transformer
+from source.data.construct_features import load_transformer
 # MODEL
 from source.models import load_model, predict_model
 # PIPELINE + LOGGER
@@ -27,8 +27,14 @@ def eval_pipeline(eval_pipeline_params: EvalPipelineParams) -> Tuple[Optional[st
     # logger.info(f"evaluating pipeline parameters:{splitter}{eval_pipeline_params}{splitter}")
     logger.debug(f"data.shape: {data.shape}")
 
+    try:  # try to load the transformer
+        transformer = load_transformer(eval_pipeline_params.input_transformer_path)
+        logger.info(f"loading transformer from {eval_pipeline_params.input_transformer_path}")
+    except FileNotFoundError:
+        logger.error(f"no such file or directory {eval_pipeline_params.input_transformer_path}")
+        return None, None
+
     # transforming data
-    transformer = build_transformer(eval_pipeline_params.feature_params)
     transformer.fit(data)
     # constructing features
     features = construct_features(transformer, data)
