@@ -1,1 +1,2 @@
-# made22-mlops-den4s
+# Repo for homeworks on MLOps
+### MADE 2022
