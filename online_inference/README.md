@@ -22,7 +22,7 @@ After `docker login`:
 ### Docker pull
 To pull the image from DockerHub:
 
-`docker pull den4s/online_inference`
+`docker pull den4s/online_inference:stable-v1`
 
 To run container:
 
