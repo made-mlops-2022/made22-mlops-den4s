@@ -38,7 +38,8 @@ services:
       airflow users create
       --username admin --password admin
       --firstname Anonymous --lastname Admin
-      --role Admin --email admin@example.org"
+      --role Admin --email admin@example.org &&
+      airflow connections add fs_default --conn-type fs"
 
   webserver:
     build:

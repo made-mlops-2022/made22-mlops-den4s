@@ -1,10 +1,12 @@
 import os
+from pathlib import Path
 from datetime import timedelta
 
 from airflow import DAG
 from airflow.operators.empty import EmptyOperator
 from airflow.providers.docker.operators.docker import DockerOperator
 from airflow.sensors.python import PythonSensor
+from airflow.sensors.filesystem import FileSensor
 from docker.types import Mount
 
 from pathes_and_consts import DATA_FILENAME, TARGET_FILENAME
@@ -22,34 +24,26 @@ default_args = {"owner": "airflow",
                 }
 
 
-def wait_for_file(file_path):
-    return os.path.exists(file_path)
-
-
 with DAG("train_model_weekly", default_args=default_args,
          schedule_interval="@weekly", start_date=START_DATE) as dag:
     task_begin = EmptyOperator(task_id="model_training_begins")
 
     # SENSOR
-    # wait_raw_data_path = RAW_DATA_PATH + "/" + DATA_FILENAME
-    # wait_data_1 = PythonSensor(task_id='waiting_for_data',
-    #                            python_callable=wait_for_file,
-    #                            op_args=[wait_raw_data_path],
-    #                            timeout=6000,
-    #                            poke_interval=10,
-    #                            retries=100,
-    #                            mode="poke"
-    #                            )
+    # wait_data_1 = FileSensor(task_id="waiting_for_data",
+    #                          filepath=str(Path(RAW_DATA_PATH) / DATA_FILENAME),
+    #                          timeout=6000,
+    #                          poke_interval=10,
+    #                          retries=100,
+    #                          mode="poke"
+    #                          )
     # SENSOR
-    # wait_target_data_path = RAW_DATA_PATH + "/" + TARGET_FILENAME
-    # wait_data_2 = PythonSensor(task_id='waiting_for_target_data',
-    #                            python_callable=wait_for_file,
-    #                            op_args=[wait_target_data_path],
-    #                            timeout=6000,
-    #                            poke_interval=10,
-    #                            retries=100,
-    #                            mode="poke"
-    #                            )
+    # wait_data_2 = FileSensor(task_id="waiting_for_target_data",
+    #                          filepath=str(Path(RAW_DATA_PATH) / TARGET_FILENAME),
+    #                          timeout=6000,
+    #                          poke_interval=10,
+    #                          retries=100,
+    #                          mode="poke"
+    #                          )
 
     preprocess_cmd = f" --input-dir {RAW_DATA_PATH} --output-dir {PROCESSED_DATA_PATH} --train yes"
     preprocess = DockerOperator(image="airflow-preprocess",

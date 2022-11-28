@@ -9,7 +9,7 @@ $ docker build -t airflow-ml-base:latest .
 Then change `VOLUME_PATH` in `.env` to your local path (for example to the `/data` in the directory) and run successively the following commands:
 ```bash
 $ export FERNET_KEY=$(python -c "from cryptography.fernet import Fernet; FERNET_KEY = Fernet.generate_key().decode(); print(FERNET_KEY)")
-$ docker compose up --build
+$ docker-compose up --build
 ```
 
 ## Airflow
